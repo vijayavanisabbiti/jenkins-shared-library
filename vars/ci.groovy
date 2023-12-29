@@ -1,26 +1,28 @@
-pipeline {
-    agent { node { label 'workstation' } }
+def call() {
+    pipeline {
+        agent { node { label 'workstation' } }
 
-    stages {
-        stage('Compile') {
-            steps {
-                echo 'Compile'
+        stages {
+            stage('Compile') {
+                steps {
+                    echo 'Compile'
+                }
             }
-        }
-        stage('Test cases') {
-            steps {
-                echo 'Test cases'
+            stage('Test cases') {
+                steps {
+                    echo 'Test cases'
+                }
             }
-        }
 
-        stage('Build') {
-            steps {
-                echo 'Build'
+            stage('Build') {
+                steps {
+                    echo 'Build'
+                }
             }
-        }
-        stage('Release') {
-            steps {
-                echo 'Release'
+            stage('Release') {
+                steps {
+                    echo 'Release'
+                }
             }
         }
     }
