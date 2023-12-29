@@ -19,7 +19,7 @@ def call() {
                     echo 'Build'
                 }
             }
-            stage('Release') {
+            stage('Release Application') {
                 steps {
                     echo 'Release'
                 }
