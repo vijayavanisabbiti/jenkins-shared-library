@@ -18,7 +18,7 @@ pipeline {
                 echo 'Build'
             }
         }
-        stage('Release') {
+        stage('Release App') {
             steps {
                 echo 'Release'
             }
