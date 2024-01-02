@@ -1,7 +1,6 @@
 def call() {
-    node ('workstation') {
 
-        sh "find . | sed -e '1d' |xargs rm -rf"
+    node ('workstation') {
 
         if(env.TAG_NAME ==~ ".*") {
             env.branch_name = "refs/tags/${env.TAG_NAME}"
@@ -25,6 +24,12 @@ def call() {
     }
 
     stage('Compile') {
+
+        if(app_type == "nodejs") {
+            stage('Download Dependencies') {
+                sh 'npm install'
+            }
+        }
 
         if(env.JOB_BASE_NAME ==~ "PR.*") {
             sh 'echo PR'
