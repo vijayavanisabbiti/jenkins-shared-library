@@ -8,7 +8,11 @@ def call() {
         if (env.TAG_NAME ==~ ".*") {
             env.branch_name = "refs/tags/${env.TAG_NAME}"
         } else {
-            env.branch_name = "${env.BRANCH_NAME}"
+            if (env.BRANCH_NAME ==~ "PR-.*") {
+                env.branch_name = "${env.CHANGE_BRANCH}"
+            } else {
+                env.branch_name = "${env.BRANCH_NAME}"
+            }
         }
 
         stage('Code Checkout') {
@@ -27,7 +31,7 @@ def call() {
                 }
             }
 
-            if (env.JOB_BASE_NAME ==~ "PR.*") {
+            if (env.JOB_BASE_NAME ==~ "PR-.*") {
                 sh 'echo PR'
                 stage('Test Cases') {}
                 stage('Integration Test Cases') {}
