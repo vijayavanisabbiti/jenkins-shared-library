@@ -1,4 +1,4 @@
-def AWS_SSM_PARAM(param_name) {
+def AWS_SSM_PARAM() {
     def OUTPUT = sh ( script: "aws ssm get-parameter --name sonarqube.token --with-decryption --query 'Parameter.Value' --output text", returnStdout: true ).trim()
     return(OUTPUT)
 }
