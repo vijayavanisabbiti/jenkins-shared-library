@@ -31,7 +31,9 @@ def call() {
         if (env.JOB_BASE_NAME ==~ "PR-.*") {
             sh 'echo PR'
             stage('Test Cases') {}
-            stage('Code Quality') {}
+            stage('Code Quality') {
+                sh 'sonar-scanner -Dsonar.host.url=http://3.86.51.6:9000 -Dsonar.login=5ab20fcf75bb8d523de99176f1a46ee86871ff11 -Dsonar.projectKey=expense-backend'
+            }
         } else if (env.BRANCH_NAME == "main") {
             sh 'echo main'
             stage('Build') {}
@@ -42,6 +44,8 @@ def call() {
         } else {
             sh 'echo branch'
             stage('Test Cases') {}
+            //sh 'npm test'
+            //These test cases in organization are ideally written and we don't skip it.
         }
 
     }
