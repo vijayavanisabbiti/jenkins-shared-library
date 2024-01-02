@@ -31,7 +31,7 @@ def call() {
             }
         }
 
-        if(env.JOB_BASE_NAME ==~ "PR.*") {
+        else if(env.JOB_BASE_NAME ==~ "PR.*") {
             sh 'echo PR'
             stage('Test Cases') {}
             stage('Integration Test Cases') {}
