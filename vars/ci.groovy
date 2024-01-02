@@ -22,7 +22,6 @@ def call() {
         }
 
         stage('Compile') {
-
             if(env.JOB_BASE_NAME ==~ "PR.*") {
                 sh 'echo PR'
                 stage('Test Cases') {}
