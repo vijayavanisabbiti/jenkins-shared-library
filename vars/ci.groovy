@@ -40,7 +40,7 @@ def call() {
             stage('Code Quality') {
 
                 env.SONAR_TOKEN = AWS_SSM_PARAM('sonarqube.token')
-                sh 'sonar-scanner -Dsonar.host.url=http://3.86.51.6:9000 -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey=${repo_name}'
+                sh 'sonar-scanner -Dsonar.host.url=http://3.86.51.6:9000 -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey=${repo_name} -Dsonar.qualitygate.wait=true -Dsonar.exclusions=node_modules/**'
             }
 
         } else if (env.BRANCH_NAME == "main") {
