@@ -1,3 +1,7 @@
+def AWS_SSM_PARAM(param_name) {
+
+}
+
 def call() {
 
     node ('workstation') {
@@ -32,7 +36,7 @@ def call() {
             sh 'echo PR'
             stage('Test Cases') {}
             stage('Code Quality') {
-                sh 'sonar-scanner -Dsonar.host.url=http://3.86.51.6:9000 -Dsonar.login=5ab20fcf75bb8d523de99176f1a46ee86871ff11 -Dsonar.projectKey=expense-backend'
+                sh 'sonar-scanner -Dsonar.host.url=http://3.86.51.6:9000 -Dsonar.login=${sonarqube.token} -Dsonar.projectKey=${repo_name}'
             }
         } else if (env.BRANCH_NAME == "main") {
             sh 'echo main'
