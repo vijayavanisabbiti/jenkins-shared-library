@@ -22,11 +22,6 @@ def call() {
         }
 
         stage('Compile') {
-            if(app_type == "nodejs") {
-                stage('Download dependencies') {
-                    sh 'npm install'
-                }
-            }
 
             if(env.JOB_BASE_NAME ==~ "PR.*") {
                 sh 'echo PR'
