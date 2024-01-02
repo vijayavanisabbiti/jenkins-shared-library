@@ -1,48 +1,49 @@
 def call() {
     node ('workstation') {
+        sh "find . | sed -e '1d | xargs rm -rf"
+
         if(env.TAG_NAME ==~ ".*") {
-            env.branchName = env.TAG_NAME
+            env.branch_name = "refs/tags/${env.TAG_NAME}"
         } else {
-            env.branchName = env.BRANCH_NAME
-        }
-        stage('Code checkout') {
-            git branch: env.branchName, credentialsId: 'vijayavani', url: 'https://github.com/vijayavanisabbiti/expense-backend'
-        }
-        stage('Compile') {}
-        if(env.BRANCH_NAME == "main") {
-            stage('Build') {}
-        } else if(env.BRANCH_NAME ==~ "PR.*") {
-            stage('test cases') {}
-            stage('Integration Test cases') {}
-        } else if(env.TAG_NAME ==~ ".*") {
-            stage('Build') {}
-            stage('Release App') {}
-        } else {
-            stage('test cases') {}
-        }
-        /*    stage('Build') {}
-        stage('Test cases') {
-            steps {
-                echo 'Test cases'
+            if(env.BRANCH_NAME ==~ "PR.*") {
+                env.branch_name = "${env.CHANGE_BRANCH}"
+            } else {
+                env.branch_name = "${env.BRANCH_NAME}"
             }
         }
 
-        stage('Integration Test cases') {
-            steps {
-                echo 'Test cases'
-            }
+        stage ('Code Checkout') {
+            checkout scmGit(
+                    branches: [[name: "${branch_name}"]],
+                    UserRemoteConfigs: [[url: "https://github.com/vijayavanisabbiti/expense-backend"]]
+            )
+
+            sh 'cat Jenkinsfile'
         }
 
-        stage('Build') {
-            steps {
-                echo 'Build'
+        stage('Compile') {
+            if(app_type == "nodejs") {
+                stage('Download dependencies') {
+                    sh 'npm install'
+                }
+            }
+
+            if(env.JOB_BASE_NAME ==~ "PR.*") {
+                sh 'echo PR'
+                stage('Test Cases') {}
+                stage('Integration Test Cases') {}
+            } else if(env.BRANCH_NAME == "main") {
+                sh 'echo main'
+                stage('Build') {}
+            } else if(env.TAG_NAME ==~ ".*") {
+                sh 'echo TAG'
+                stage('Build') {}
+                stage('Release App') {}
+            } else {
+                sh 'echo branch'
+                stage('Test Cases') {}
             }
         }
-        stage('Release Application') {
-            steps {
-                echo 'Release'
-            }
-        }*/
     }
 }
 
