@@ -17,7 +17,7 @@ def call() {
             //git branch: "${env.branchName}", url: 'https://github.com/raghudevopsb76/expense-backend'
             checkout scmGit(
                     branches: [[name: "${branch_name}"]],
-                    userRemoteConfigs: [[url: "https://github.com/raghudevopsb76/${repo_name}"]]
+                    userRemoteConfigs: [[url: "https://github.com/vijayavanisabbiti/${repo_name}"]]
             )
         }
 
