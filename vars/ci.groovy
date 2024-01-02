@@ -10,12 +10,12 @@ def call() {
         } else {
             env.branch_name = "${env.BRANCH_NAME}"
         }
+
+        stage('Code Checkout') {
         checkout scmGit(
                 branches: [[name: "${branch_name}"]],
                 userRemoteConfigs: [[url: "https://github.com/vijayavanisabbiti/${repo_name}"]]
         )
-
-        stage('Code Checkout') {
 
             sh 'cat Jenkinsfile'
         }
