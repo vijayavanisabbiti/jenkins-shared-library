@@ -2,7 +2,6 @@ def call() {
 
     node ('workstation') {
 
-        sh "find ."
         sh "find . | sed -e '1d' |xargs rm -rf"
 
         if (env.TAG_NAME ==~ ".*") {
@@ -20,9 +19,9 @@ def call() {
                 branches: [[name: "${branch_name}"]],
                 userRemoteConfigs: [[url: "https://github.com/vijayavanisabbiti/${repo_name}"]]
         )
-
             sh 'cat Jenkinsfile'
         }
+
         stage('Compile') {
 
             if (app_type == "nodejs") {
