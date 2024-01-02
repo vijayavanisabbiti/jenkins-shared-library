@@ -1,5 +1,6 @@
 def AWS_SSM_PARAM(param_name) {
-
+    def OUTPUT = sh ( script: "aws ssm get-parameter --name sonarqube.token --with-decryption --query 'Parameter.Value' --output text" ).trim()
+    return(OUTPUT)
 }
 
 def call() {
@@ -36,7 +37,7 @@ def call() {
             sh 'echo PR'
             stage('Test Cases') {}
             stage('Code Quality') {
-                sh 'sonar-scanner -Dsonar.host.url=http://3.86.51.6:9000 -Dsonar.login=${sonarqube.token} -Dsonar.projectKey=${repo_name}'
+                sh 'sonar-scanner -Dsonar.host.url=http://3.86.51.6:9000 -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey=${repo_name}'
             }
         } else if (env.BRANCH_NAME == "main") {
             sh 'echo main'
