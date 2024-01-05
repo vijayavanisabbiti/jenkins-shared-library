@@ -54,6 +54,7 @@ def call() {
         } else if (env.TAG_NAME ==~ ".*") {
             sh 'echo TAG'
             stage('Build') {
+
                 sh 'zip -r ${repo_name}-${TAG_NAME}.zip *'
             }
 
