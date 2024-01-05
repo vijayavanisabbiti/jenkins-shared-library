@@ -62,7 +62,7 @@ def call() {
 
                 env.ARTIFACTORY_PASSWORD = AWS_SSM_PARAM('art.password')
                 wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${ARTIFACTORY_PASSWORD}", var: 'PASSWORD']]]) {
-                    sh 'curl -sSf -u "admin:${ARTIFACTORY_PASSWORD}" -X PUT -T expense-backend-${TAG_NAME}.zip http://artifactory.vijayavanimanju.online:8081/artifactory/expense-backend-${TAG_NAME}.zip'
+                    sh 'curl -sSf -u "admin:${ARTIFACTORY_PASSWORD}" -X PUT -T ${repo_name}-${TAG_NAME}.zip http://artifactory.vijayavanimanju.online:8081/artifactory/${repo_name}/${repo_name}-${TAG_NAME}.zip'
                 }
             }
         } else {
